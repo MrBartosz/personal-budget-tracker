@@ -40,5 +40,3 @@ To give you a visual overview of the application, here are some screenshots:
 ## 🤝 Collaboration
 
 ## 📧 Contact
-
-Witam
