@@ -22,5 +22,6 @@ export const theme = {
 
     neutral: '#FFFFFF',
     error: '#ff0000',
+    header: '#333',
   },
 }
