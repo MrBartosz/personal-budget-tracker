@@ -20,7 +20,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ title }) => {
       containerStyle={{
         backgroundColor: theme.colors.header,
         height: 90,
-        borderRadius: 8,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
       }}
       barStyle="light-content"
     />
