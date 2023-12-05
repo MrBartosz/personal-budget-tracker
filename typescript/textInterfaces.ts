@@ -13,3 +13,10 @@ export interface IRecipeText {
   textDecorationLine?: string
   textAlign?: 'auto' | 'center' | 'left' | 'right' | 'justify'
 }
+
+export interface Entry {
+  id: string
+  date: string
+  amount: string
+  category: string
+}
