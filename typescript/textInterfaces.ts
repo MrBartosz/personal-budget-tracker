@@ -29,6 +29,7 @@ export interface SummaryProps {
 
 export interface EntryItemProps {
   item: {
+    id: string
     date: string
     amount: number
     category: string
