@@ -20,3 +20,19 @@ export interface Entry {
   amount: string
   category: string
 }
+
+export interface SummaryProps {
+  totalIncome: number
+  totalExpenses: number
+  balance: number
+}
+
+export interface EntryItemProps {
+  item: {
+    date: string
+    amount: number
+    category: string
+  }
+  handleEditEntry: (item: { date: string; amount: number; category: string }) => void
+  handleDeleteEntry: (itemId: string) => void
+}
