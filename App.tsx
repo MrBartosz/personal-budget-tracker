@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView, View } from 'react-native'
 import { MainArea } from './src/views/MainArea'
 import { AppHeader } from './src/views/AppHeader'
-import { strings } from './src/components/contants/strings'
+import { strings } from './src/components/constants/strings'
 import { Footer } from './src/views/Footer'
 import { theme } from './src/styles/theme'
 import { FontLoader } from './src/components/fontLoader/FontLoader'

@@ -4,12 +4,17 @@ import { Picker } from '@react-native-picker/picker'
 import { Entry } from '../../typescript/textInterfaces'
 import { GlobalButtton } from '../components/butttons/GlobalButton'
 import { TextRegular } from '../components/typography/Text'
+import { UpdateTotalAndBalance } from '../components/constants/UpdateTotalAndBalance'
+import { EntryItem, Summary } from '../components/constants/EntryComponents'
 
 export const MainArea = () => {
   const [entries, setEntries] = useState<Entry[]>([])
   const [isEditingCategory, setIsEditingCategory] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null)
   const [isEditModalVisible, setEditModalVisible] = useState(false)
+  const [totalIncome, setTotalIncome] = useState<number>(0)
+  const [totalExpenses, setTotalExpenses] = useState<number>(0)
+  const [balance, setBalance] = useState<number>(0)
   const [formData, setFormData] = useState({
     date: '',
     amount: '',
@@ -39,6 +44,7 @@ export const MainArea = () => {
   const handleDeleteEntry = (entryId: string) => {
     const updatedEntries = entries.filter((entry) => entry.id !== entryId)
     setEntries(updatedEntries)
+    UpdateTotalAndBalance(updatedEntries, setTotalIncome, setTotalExpenses, setBalance)
   }
 
   const handleAddEntry = () => {
@@ -50,6 +56,7 @@ export const MainArea = () => {
     const newEntry: Entry = { id: Date.now().toString(), ...formData }
     setEntries([...entries, newEntry])
     setFormData({ date: '', amount: '', category: '' })
+    UpdateTotalAndBalance([...entries, newEntry], setTotalIncome, setTotalExpenses, setBalance)
   }
 
   const handleUpdateEntry = () => {
@@ -57,20 +64,9 @@ export const MainArea = () => {
       entry.id === selectedEntry?.id ? { ...selectedEntry, ...formData } : entry
     )
     setEntries(updatedEntries)
+    UpdateTotalAndBalance(updatedEntries, setTotalIncome, setTotalExpenses, setBalance)
     setEditModalVisible(false)
   }
-
-  const renderItem: ListRenderItem<Entry> = ({ item }) => (
-    <View style={styles.entry}>
-      <Text>Date: {item.date}</Text>
-      <Text>Amount: {item.amount}</Text>
-      <Text>Category: {item.category}</Text>
-      <View style={styles.buttonsContainer}>
-        <GlobalButtton width={130} title="Edit" submitFunction={() => handleEditEntry(item)} />
-        <GlobalButtton width={130} title="Delete" submitFunction={() => handleDeleteEntry(item.id)} />
-      </View>
-    </View>
-  )
 
   return (
     <View style={styles.mainContainer}>
@@ -117,10 +113,17 @@ export const MainArea = () => {
       </View>
       <View style={styles.entriesContainer}>
         {entries.length > 0 ? (
-          <FlatList data={entries} renderItem={renderItem} keyExtractor={(item) => item.id} />
+          <FlatList
+            data={entries}
+            renderItem={({ item }) => (
+              <EntryItem item={item} handleEditEntry={handleEditEntry} handleDeleteEntry={handleDeleteEntry} />
+            )}
+            keyExtractor={(item) => item.id}
+          />
         ) : (
           <Text>No entries to display</Text>
         )}
+        <Summary totalIncome={totalIncome} totalExpenses={totalExpenses} balance={balance} />
       </View>
       <Modal visible={isEditModalVisible} animationType="slide">
         <View style={styles.editModalContainer}>
@@ -175,13 +178,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  entry: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: 'gray',
-    marginBottom: 20,
-    padding: 10,
-  },
   entryButton: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -195,9 +191,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-  },
-  buttonsContainer: {
-    flex: 1,
-    flexDirection: 'row',
   },
 })

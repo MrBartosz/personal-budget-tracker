@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { strings } from '../components/contants/strings'
+import { strings } from '../components/constants/strings'
 import { TextRegular } from '../components/typography/Text'
 import { theme } from '../styles/theme'
 
