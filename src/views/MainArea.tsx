@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, FlatList, ListRenderItem, Modal } from 'react-native'
+import { View, Text, TextInput, StyleSheet, FlatList, Modal } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { Entry } from '../../typescript/textInterfaces'
 import { GlobalButtton } from '../components/butttons/GlobalButton'
 import { TextRegular } from '../components/typography/Text'
 import { UpdateTotalAndBalance } from '../components/constants/UpdateTotalAndBalance'
 import { EntryItem, Summary } from '../components/constants/EntryComponents'
+import { RenderChart } from '../components/chart/RenderChart'
 
 export const MainArea = () => {
   const [entries, setEntries] = useState<Entry[]>([])
@@ -124,6 +125,11 @@ export const MainArea = () => {
           <Text>No entries to display</Text>
         )}
         <Summary totalIncome={totalIncome} totalExpenses={totalExpenses} balance={balance} />
+        {entries.length > 0 && (
+          <View style={styles.chartContainer}>
+            <RenderChart totalIncome={totalIncome} totalExpenses={totalExpenses} />
+          </View>
+        )}
       </View>
       <Modal visible={isEditModalVisible} animationType="slide">
         <View style={styles.editModalContainer}>
