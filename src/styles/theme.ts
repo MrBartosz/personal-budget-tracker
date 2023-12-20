@@ -20,6 +20,9 @@ export const theme = {
     ecru: '#FFFCE6',
     black: '#000000',
 
+    income: '#304D30',
+    expense: '#EF4040',
+
     neutral: '#FFFFFF',
     error: '#ff0000',
     header: '#333',
