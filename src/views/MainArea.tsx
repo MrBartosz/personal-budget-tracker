@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, FlatList, Modal } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Picker } from '@react-native-picker/picker'
 import { Entry } from '../../typescript/textInterfaces'
 import { GlobalButtton } from '../components/butttons/GlobalButton'
@@ -9,6 +10,7 @@ import { EntryItem, Summary } from '../components/constants/EntryComponents'
 import { RenderChart } from '../components/chart/RenderChart'
 
 export const MainArea = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const [entries, setEntries] = useState<Entry[]>([])
   const [isEditingCategory, setIsEditingCategory] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null)
@@ -21,6 +23,38 @@ export const MainArea = () => {
     amount: '',
     category: '',
   })
+
+  useEffect(() => {
+    const loadEntries = async () => {
+      try {
+        const storedEntries = await AsyncStorage.getItem('userEntries')
+        if (storedEntries) {
+          const parsedEntries = JSON.parse(storedEntries)
+          setEntries(parsedEntries)
+          UpdateTotalAndBalance(parsedEntries, setTotalIncome, setTotalExpenses, setBalance)
+        }
+      } catch (error) {
+        console.error('Error loading entries from AsyncStorage:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadEntries()
+  }, [])
+
+  useEffect(() => {
+    const saveEntries = async () => {
+      try {
+        await AsyncStorage.setItem('userEntries', JSON.stringify(entries))
+      } catch (error) {
+        console.error('Error saving entries to AsyncStorage:', error)
+      }
+    }
+
+    saveEntries()
+    UpdateTotalAndBalance(entries, setTotalIncome, setTotalExpenses, setBalance)
+  }, [entries])
 
   const handleInputChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value })
