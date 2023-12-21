@@ -1,6 +1,6 @@
 **This is application to help users track their personal budget. Users can add, view, edit, and delete income and expenses, categorize them, and see a summary of their financial activity**
 
-## 🌐 Video
+## 📽️ Video
 
 
 https://github.com/MrBartosz/personal-budget-tracker-1701175264/assets/104212107/b97fa06a-566c-430f-a5f6-4231efb05046
