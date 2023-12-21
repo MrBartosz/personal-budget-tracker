@@ -1,4 +1,4 @@
-**This is application to help users track their personal budget. Users can add, view, edit, and delete income and expenses, categorize them, and see a summary of their financial activity**
+**This is an application to help users track their personal budget. Users can add, view, edit, and delete income and expenses, categorize them, and see a summary of their financial activity.**
 
 ## 📽️ Video
 
